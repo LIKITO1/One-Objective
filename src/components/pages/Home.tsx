@@ -1,5 +1,6 @@
 import Lottie from "lottie-react"
 import AeroPlane from "../animations/Aero plane.json"
+import {Link} from "react-router-dom"
 export default function Home(){
     return(
         <div className="flex flex-col h-full w-full text-white py-5 items-center">
@@ -8,7 +9,7 @@ export default function Home(){
                 <Lottie animationData={AeroPlane} loop={true} className="w-4/5"/>
                 <p className="font-semibold text-lg">Nenhum quadro criado</p>
             </div>
-            <button className="w-5/6 bg-green-800 font-semibold p-3 rounded-xl mt-5 text-lg flex items-center justify-center"><span className="text-4xl mb-2">+ &nbsp;</span>Criar Quadro</button>
+            <Link to="/addboard" className="w-1/2 bg-green-800 font-semibold p-3 rounded-xl text-lg flex items-center justify-center absolute right-[5%] bottom-[15%]"><span className="text-4xl mb-2">+ &nbsp;</span>Criar Quadro</Link>
         </div>
     )
 }
