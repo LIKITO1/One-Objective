@@ -1,4 +1,5 @@
 import {useState} from "react"
+import Card from "../layouts/Card"
 export default function AddBoard(){
     const [nameBoard,setNameBoard]=useState("")
     const [corBoard,setColorBoard]=useState("")
@@ -11,7 +12,7 @@ export default function AddBoard(){
         "#3b82f6",
         "#a855f7"
       ]
-    function submit(e:React.FormEvent){
+    function submit(e:{preventDefault:()=>void}){
         e.preventDefault()
         if(selected==""){
             console.log("Escolha uma cor")
@@ -37,6 +38,7 @@ export default function AddBoard(){
                 </div>
                 <button className="absolute p-3 bg-green-800 text-white font-semibold rounded-xl bottom-30 w-3/5 right-1/5 left-1/5" type="submit">Adicionar Board</button>
             </form>
+            <Card tipo="success" msg="Testando..."/>
         </div>
     )
 }
