@@ -1,0 +1,1 @@
+export type tipos="success" | "error" | "warning"
