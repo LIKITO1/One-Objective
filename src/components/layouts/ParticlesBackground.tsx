@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
-
-export default function ParticlesBackground() {
+type BackProps={
+  back:string,
+  color:string
+}
+export default function ParticlesBackground({back,color}:BackProps) {
 
   const [init, setInit] = useState(false)
 
@@ -24,18 +27,18 @@ export default function ParticlesBackground() {
           zIndex: -1
         },
         background: {
-          color: "#154"
+          color: back
         },
         particles: {
           number: {
-            value: 80
+            value: 100
           },
           color: {
-            value: "#ffffff"
+            value: color
           },
           links: {
             enable: true,
-            color: "#ffffff",
+            color: color,
             distance: 100
           },
           move: {
