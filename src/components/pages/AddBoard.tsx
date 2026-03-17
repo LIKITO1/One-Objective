@@ -28,12 +28,12 @@ export default function AddBoard(){
             setCardId((valor)=>valor+1)
         }
         else{
-            await fetch("http://localhost:3000/add",{
+            await fetch("http://localhost:3000/addBoard",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
                 },
-                body:JSON.stringify({name:nameBoard,color:colorBoard})
+                body:JSON.stringify({name:nameBoard,color:colorBoard,user_id:localStorage.getItem("user_id")})
             }).then((response)=>response.json()).then((res)=>{
                 setMsg(res.msg)
                 setTipoCard(res.tipo)

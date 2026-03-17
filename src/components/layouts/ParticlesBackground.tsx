@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
+import {memo} from "react"
 type BackProps={
   back:string,
   color:string
 }
-export default function ParticlesBackground({back,color}:BackProps) {
+function ParticlesBackground({back,color}:BackProps) {
 
   const [init, setInit] = useState(false)
 
@@ -50,3 +51,4 @@ export default function ParticlesBackground({back,color}:BackProps) {
     />
   )
 }
+export default memo(ParticlesBackground)

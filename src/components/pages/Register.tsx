@@ -27,6 +27,8 @@ export default function Register(){
         if(res.tipo=="success"){
             setTimeout(()=>{
                 navigate("/home")
+                localStorage.setItem("logado","true")
+                localStorage.setItem("user_id",res.user_id)
             },1500)
         }
     }
