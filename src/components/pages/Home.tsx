@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import {useState,useEffect} from "react"
 import TrashIcon from "../icons/TrashIcon"
 import Card from "../layouts/Card"
+import CardDelete from "../layouts/CardDelete"
 import type {tipos} from "../types/CardType"
 type Board={
     id:number,
@@ -14,17 +15,22 @@ export default function Home(){
     const [boards,setBoards]=useState<Board[]>([])
     const [msg,setMsg]=useState("")
     const [tipo,setTipo]=useState<tipos>("success")
-    async function exclude(id:number){
+    const [cardDelete,setCardDelete]=useState(false)
+    const [cardDeleteId,setCardDeleteId]=useState(0)
+    const [cardId,setCardId]=useState(0)
+    async function excluir(){
         const response=await fetch("http://localhost:3000/deleteBoard",{
             method:"DELETE",
             headers:{
                 "Content-Type":"application/json"
             },
-            body:JSON.stringify({board_id:id})
+            body:JSON.stringify({board_id:cardDeleteId})
         })
         const res=await response.json()
         setMsg(res.msg)
         setTipo(res.tipo)
+        setCardDelete(false)
+        setBoards((e)=>e.filter((a)=>a.id!=cardDeleteId))
     }
     useEffect(()=>{
         async function request(){
@@ -54,7 +60,7 @@ export default function Home(){
             {boards.map((valor)=>(
                 <div key={valor.id} style={{background:valor.color}} className="w-3/4 h-1/8 my-1 text-white flex items-center justify-around rounded-xl font-semibold text-lg">
                     <div className="w-1/2">{valor.name}</div>
-                    <TrashIcon onClick={()=>exclude(valor.id)}/>
+                    <TrashIcon onClick={()=>{setCardDelete(true);setCardDeleteId(valor.id);setCardId((e)=>e+1)}}/>
                 </div>
             ))}
             </div>
@@ -62,6 +68,9 @@ export default function Home(){
             <Link to="/addboard" className="w-1/2 bg-green-800 font-semibold p-3 rounded-xl text-lg flex items-center justify-center absolute right-[5%] bottom-[15%]"><span className="text-4xl mb-2">+ &nbsp;</span>Criar Quadro</Link>
             {msg&&msg.length>0&&(
                 <Card msg={msg} tipo={tipo}/>
+            )}
+            {cardDelete&&(
+                <CardDelete key={cardId} onClick={excluir}/>
             )}
         </div>
     )

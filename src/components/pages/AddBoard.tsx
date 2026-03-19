@@ -1,5 +1,6 @@
 import {useState} from "react"
 import Card from "../layouts/Card"
+import {useNavigate} from "react-router-dom"
 import type {tipos} from "../types/CardType"
 export default function AddBoard(){
     const [nameBoard,setNameBoard]=useState("")
@@ -7,6 +8,7 @@ export default function AddBoard(){
     const [cardId,setCardId]=useState(0)
     const [msg,setMsg]=useState("")
     const [tipoCard,setTipoCard]=useState<tipos>("success")
+    const navigate=useNavigate()
     const colors= [
         "#ef4444",
         "#f97316",
@@ -28,16 +30,19 @@ export default function AddBoard(){
             setCardId((valor)=>valor+1)
         }
         else{
-            await fetch("http://localhost:3000/addBoard",{
+            const response=await fetch("http://localhost:3000/addBoard",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
                 },
                 body:JSON.stringify({name:nameBoard,color:colorBoard,user_id:localStorage.getItem("user_id")})
-            }).then((response)=>response.json()).then((res)=>{
-                setMsg(res.msg)
-                setTipoCard(res.tipo)
             })
+            const res=await response.json()
+            setMsg(res.msg)
+            setTipoCard(res.tipo)
+            setTimeout(()=>{
+                navigate("/home")
+            },1500)
         }
     }
     return(
