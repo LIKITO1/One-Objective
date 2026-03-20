@@ -7,6 +7,7 @@ import Layout from './components/layouts/Layout.tsx'
 import Perfil from "./components/pages/Perfil.tsx"
 import AddBoard from './components/pages/AddBoard.tsx'
 import Register from "./components/pages/Register.tsx"
+import Board from "./components/pages/Board.tsx"
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
           <Route element={<App/>} path="/"></Route>
           <Route element={<Register/>} path="/register"></Route>
+          <Route element={<Board/>} path="/board/:id"></Route>
         <Route element={<Layout/>}>
           <Route element={<Home/>} path="/home"></Route>
           <Route element={<Perfil/>} path="/perfil"></Route>

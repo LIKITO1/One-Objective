@@ -1,6 +1,6 @@
 import Lottie from "lottie-react"
 import AeroPlane from "../animations/Aero plane.json"
-import {Link} from "react-router-dom"
+import {Link,useNavigate} from "react-router-dom"
 import {useState,useEffect} from "react"
 import TrashIcon from "../icons/TrashIcon"
 import Card from "../layouts/Card"
@@ -18,6 +18,15 @@ export default function Home(){
     const [cardDelete,setCardDelete]=useState(false)
     const [cardDeleteId,setCardDeleteId]=useState(0)
     const [cardId,setCardId]=useState(0)
+    const navigate=useNavigate()
+    function trash(idBoard:number){
+        setCardDelete(true)
+        setCardDeleteId(idBoard)
+        setCardId((e)=>e+1)
+    }
+    function boardClick(idBoard:number){
+        navigate(`/board/${idBoard}`)
+    }
     async function excluir(){
         const response=await fetch("http://localhost:3000/deleteBoard",{
             method:"DELETE",
@@ -58,9 +67,9 @@ export default function Home(){
             {boards.length>0&&(
             <div className="h-[70%] w-full flex items-center justify-center flex-col">
             {boards.map((valor)=>(
-                <div key={valor.id} style={{background:valor.color}} className="w-3/4 h-1/8 my-1 text-white flex items-center justify-around rounded-xl font-semibold text-lg">
+                <div key={valor.id} onClick={()=>boardClick(valor.id)} style={{background:valor.color}} className="w-3/4 h-1/8 my-1 text-white flex items-center justify-around rounded-xl font-semibold text-lg">
                     <div className="w-1/2">{valor.name}</div>
-                    <TrashIcon onClick={()=>{setCardDelete(true);setCardDeleteId(valor.id);setCardId((e)=>e+1)}}/>
+                    <TrashIcon onClick={()=>{trash(valor.id)}}/>
                 </div>
             ))}
             </div>
