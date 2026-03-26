@@ -28,7 +28,7 @@ export default function Home(){
         navigate(`/board/${idBoard}`)
     }
     async function excluir(){
-        const response=await fetch("http://localhost:3000/deleteBoard",{
+        const response=await fetch("https://backend-one-objective.onrender.com/deleteBoard",{
             method:"DELETE",
             headers:{
                 "Content-Type":"application/json"
@@ -43,7 +43,7 @@ export default function Home(){
     }
     useEffect(()=>{
         async function request(){
-            const response=await fetch("http://localhost:3000/boards",{
+            const response=await fetch("https://backend-one-objective.onrender.com/boards",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"

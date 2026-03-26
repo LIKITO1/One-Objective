@@ -1,11 +1,12 @@
 import { MdHome } from "react-icons/md";
 type Props={
-    className:string
+    className:string,
+    onClick:()=>void
 }
-export default function HomeIcon({className}:Props){
+export default function HomeIcon({className,onClick}:Props){
     return(
         <div>
-            <MdHome className={className}/>
+            <button onClick={onClick}><MdHome className={className}/></button>
         </div>
     )
 }

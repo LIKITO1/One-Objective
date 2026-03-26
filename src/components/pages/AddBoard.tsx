@@ -30,7 +30,7 @@ export default function AddBoard(){
             setCardId((valor)=>valor+1)
         }
         else{
-            const response=await fetch("http://localhost:3000/addBoard",{
+            const response=await fetch("https://backend-one-objective.onrender.com/addBoard",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
