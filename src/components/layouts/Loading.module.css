@@ -1,0 +1,11 @@
+@keyframes animacao{
+    from{
+        transform: rotate(0);
+    }
+    to{
+        transform:rotate(360deg) ;
+    }
+}
+.animado{
+    animation:animacao 0.5s linear infinite;
+}

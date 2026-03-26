@@ -5,18 +5,21 @@ import type {tipos} from "../types/CardType"
 import HomeIcon from "../icons/HomeIcon"
 import AddIcon from "../icons/AddIcon"
 import Lists from "../layouts/Lists"
+import Loading from "../layouts/Loading"
 export default function Board(){
     const {id}=useParams()
     const [color,setColor]=useState("")
     const [msg,setMsg]=useState("")
     const [tipo,setTipo]=useState<tipos>("success")
     const [name,setName]=useState("")
+    const [isLoading,setIsLoading]=useState(false)
     const navigate=useNavigate()
     function home(){
         navigate("/home")
     }
     useEffect(()=>{
         async function requisitar(){
+            setIsLoading(true)
             const response=await fetch("https://backend-one-objective.onrender.com/board",{
                 method:"POST",
                 headers:{
@@ -25,6 +28,7 @@ export default function Board(){
                 body:JSON.stringify({id})
             })
             const res=await response.json()
+            setIsLoading(false)
             if(res?.msg){
                 setMsg(res.msg)
                 setTipo(res.tipo)
@@ -48,6 +52,9 @@ export default function Board(){
                 <Card msg={msg} tipo={tipo}/>
             )}
             <AddIcon className="absolute bottom-30 size-15 rounded-2xl text-white bg-gray-700 right-7"/>
+            {isLoading&&(
+                <Loading/>
+            )}
         </div>
     )
 }

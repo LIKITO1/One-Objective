@@ -5,6 +5,7 @@ import {useState,useEffect} from "react"
 import TrashIcon from "../icons/TrashIcon"
 import Card from "../layouts/Card"
 import CardDelete from "../layouts/CardDelete"
+import Loading from "../layouts/Loading"
 import type {tipos} from "../types/CardType"
 type Board={
     id:number,
@@ -18,6 +19,7 @@ export default function Home(){
     const [cardDelete,setCardDelete]=useState(false)
     const [cardDeleteId,setCardDeleteId]=useState(0)
     const [cardId,setCardId]=useState(0)
+    const [isLoading,setIsLoading]=useState(false)
     const navigate=useNavigate()
     function trash(idBoard:number){
         setCardDelete(true)
@@ -28,6 +30,7 @@ export default function Home(){
         navigate(`/board/${idBoard}`)
     }
     async function excluir(){
+        setIsLoading(true)
         const response=await fetch("https://backend-one-objective.onrender.com/deleteBoard",{
             method:"DELETE",
             headers:{
@@ -36,6 +39,7 @@ export default function Home(){
             body:JSON.stringify({board_id:cardDeleteId})
         })
         const res=await response.json()
+        setIsLoading(false)
         setMsg(res.msg)
         setTipo(res.tipo)
         setCardDelete(false)
@@ -43,6 +47,7 @@ export default function Home(){
     }
     useEffect(()=>{
         async function request(){
+            setIsLoading(true)
             const response=await fetch("https://backend-one-objective.onrender.com/boards",{
                 method:"POST",
                 headers:{
@@ -51,14 +56,17 @@ export default function Home(){
                 body:JSON.stringify({user_id:localStorage.getItem("user_id")})
             })
             const res=await response.json()
-            setBoards(res.boards)
+            if(res.boards.length>0){
+                setBoards(res.boards)
+            }
+            setIsLoading(false)
         }
         request()
     },[])
     return(
         <div className="flex flex-col h-full w-full text-white py-5 items-center">
             <h1 className="font-semibold text-3xl text-center">Quadros</h1>
-            {boards.length<=0&&(
+            {boards.length<=0&&!isLoading&&(
             <div className="flex flex-col gap-3 mt-5 items-center justify-center">
                 <Lottie animationData={AeroPlane} loop={true} className="w-4/5"/>
                 <p className="font-semibold text-lg">Nenhum quadro criado</p>
@@ -80,6 +88,9 @@ export default function Home(){
             )}
             {cardDelete&&(
                 <CardDelete key={cardId} onClick={excluir}/>
+            )}
+                        {isLoading&&(
+                <Loading/>
             )}
         </div>
     )

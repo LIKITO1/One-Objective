@@ -1,6 +1,7 @@
 import {useState} from "react"
 import Card from "../layouts/Card"
 import {useNavigate} from "react-router-dom"
+import Loading from "../layouts/Loading"
 import type {tipos} from "../types/CardType"
 export default function AddBoard(){
     const [nameBoard,setNameBoard]=useState("")
@@ -8,6 +9,7 @@ export default function AddBoard(){
     const [cardId,setCardId]=useState(0)
     const [msg,setMsg]=useState("")
     const [tipoCard,setTipoCard]=useState<tipos>("success")
+    const [isLoading,setIsLoading]=useState(false)
     const navigate=useNavigate()
     const colors= [
         "#ef4444",
@@ -30,6 +32,7 @@ export default function AddBoard(){
             setCardId((valor)=>valor+1)
         }
         else{
+            setIsLoading(true)
             const response=await fetch("https://backend-one-objective.onrender.com/addBoard",{
                 method:"POST",
                 headers:{
@@ -40,6 +43,7 @@ export default function AddBoard(){
             const res=await response.json()
             setMsg(res.msg)
             setTipoCard(res.tipo)
+            setIsLoading(false)
             setTimeout(()=>{
                 navigate("/home")
             },1500)
@@ -66,6 +70,9 @@ export default function AddBoard(){
             </form>
             {msg&&msg.length>0&&(
                 <Card msg={msg} tipo={tipoCard} key={cardId}/>
+            )}
+            {isLoading&&(
+                <Loading/>
             )}
         </div>
     )
