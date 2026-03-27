@@ -4,6 +4,8 @@ import {useState} from "react"
 import Card from "../layouts/Card"
 import type {tipos} from "../types/CardType"
 import { useNavigate } from "react-router-dom"
+import Lottie from "lottie-react"
+import Kaleidoscope from "../animations/Kaleidoscope.json"
 export default function Register(){
     const [name,setName]=useState("")
     const [email,setEmail]=useState("")
@@ -12,15 +14,18 @@ export default function Register(){
     const [tipo,setTipo]=useState<tipos>("success")
     const [cardId,setCardId]=useState(0)
     const navigate=useNavigate()
+    const [isLoading,setIsLoading]=useState(false)
     async function register(e:{preventDefault:()=>void}){
         e.preventDefault()
-        const response=await fetch("https://backend-one-objective.onrender.com/createUser",{
+        setIsLoading(true)
+        const response=await fetch("http://localhost:3000/createUser",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
             },body:JSON.stringify({name,pass,email})
         })
         const res=await response.json()
+        setIsLoading(false)
         setTipo(res.tipo)
         setMsg(res.msg)
         setCardId((e)=>e+1)
@@ -56,6 +61,12 @@ export default function Register(){
     </div>
     {msg&&msg.length>0&&(
     <Card msg={msg} tipo={tipo} key={cardId}/>
+    )}
+    {isLoading&&(
+      <div className="absolute w-full h-full flex items-center justify-center backdrop-blur-xl flex-col">
+      <Lottie animationData={Kaleidoscope} loop={true} className="w-full"/>
+      <p className="text-white text-xl font-semibold">Isso pode levar cerca de 1 minuto</p>
+    </div>
     )}
         </>
     )

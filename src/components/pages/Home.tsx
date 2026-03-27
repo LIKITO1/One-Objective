@@ -56,8 +56,12 @@ export default function Home(){
                 body:JSON.stringify({user_id:localStorage.getItem("user_id")})
             })
             const res=await response.json()
-            if(res.boards.length>0){
-                setBoards(res.boards)
+            try{
+                if(res.boards.length>0){
+                    setBoards(res.boards)
+                }
+            }catch(e){
+                setBoards([])
             }
             setIsLoading(false)
         }

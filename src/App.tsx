@@ -4,6 +4,8 @@ import {useState} from "react"
 import Card from "./components/layouts/Card"
 import type {tipos} from "./components/types/CardType"
 import {useNavigate} from "react-router-dom"
+import Lottie from "lottie-react"
+import Kaleidoscope from "./components/animations/Kaleidoscope.json"
 function App() {
   const [email,setEmail]=useState("")
   const [pass,setPass]=useState("")
@@ -11,8 +13,10 @@ function App() {
   const [tipo,setTipo]=useState<tipos>("success")
   const [cardId,setCardId]=useState(0)
   const navigate=useNavigate()
+  const [isLoading,setIsLoading]=useState(false)
   async function logar(e:{preventDefault:()=>void}){
     e.preventDefault()
+    setIsLoading(true)
     const response=await fetch("https://backend-one-objective.onrender.com/login",{
       method:"POST",
       headers:{
@@ -21,6 +25,7 @@ function App() {
     })
     const res=await response.json()
     setCardId((e)=>e+1)
+    setIsLoading(false)
     setMsg(res.msg)
     setTipo(res.tipo)
     if(res.tipo=="success"){
@@ -51,6 +56,12 @@ function App() {
     </div>
     {msg&&msg.length>0&&(
       <Card msg={msg} tipo={tipo} key={cardId}/>
+    )}
+    {isLoading&&(
+      <div className="absolute w-full h-full flex items-center justify-center backdrop-blur-xl flex-col">
+        <Lottie animationData={Kaleidoscope} loop={true} className="w-full"/>
+        <p className="text-white text-xl font-semibold">Isso pode levar cerca de 1 minuto</p>
+      </div>
     )}
     </>
   )
