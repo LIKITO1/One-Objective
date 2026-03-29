@@ -21,14 +21,14 @@ export default function Lists(){
         requisitar()
     },[id])
     return (
-        <div className="w-full h-full flex gap-3 p-2">
-            <div className="w-1/2 bg-gray-900 h-1/3 text-white rounded-2xl">
+        <div className="w-full h-full flex gap-2 flex-wrap justify-center p-2">
                 {data.map((valor)=>(
-                    <div key={valor.id}>
+                <div className="w-[45%] bg-gray-900 h-1/3 text-white rounded-2xl" key={valor.id}>
+                    <div>
                         <h1 className="w-full text-center text-xl font-semibold mt-2">{valor.title}</h1>
                     </div>
-                ))}
             </div>
+                ))}
         </div>
     )
 }

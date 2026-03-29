@@ -6,6 +6,7 @@ import HomeIcon from "../icons/HomeIcon"
 import AddIcon from "../icons/AddIcon"
 import Lists from "../layouts/Lists"
 import Loading from "../layouts/Loading"
+import FormAddList from "../layouts/FormAddList"
 export default function Board(){
     const {id}=useParams()
     const [color,setColor]=useState("")
@@ -13,6 +14,7 @@ export default function Board(){
     const [tipo,setTipo]=useState<tipos>("success")
     const [name,setName]=useState("")
     const [isLoading,setIsLoading]=useState(false)
+    const [mostrarAddList,setMostrarAddList]=useState(false)
     const navigate=useNavigate()
     function home(){
         navigate("/home")
@@ -44,14 +46,17 @@ export default function Board(){
         requisitar()
     },[])
     return(
-        <div className="h-full w-full absolute" style={{background:color}}>
+        <div className="h-full w-full fixed" style={{background:color}}>
+            {mostrarAddList&&(
+                <FormAddList board_id={id||""} sumir={!mostrarAddList} fechar={()=>setMostrarAddList(false)}/>
+            )}
             <h1 className="w-full text-center text-4xl font-bold text-white mt-5">{name}</h1>
             <Lists/>
             <HomeIcon onClick={home} className="size-13 text-white absolute right-5 bottom-8 bg-blue-800 rounded-2xl p-3 box-content"/>
             {msg&&msg.length>0&&(
                 <Card msg={msg} tipo={tipo}/>
             )}
-            <AddIcon className="absolute bottom-30 size-15 rounded-2xl text-white bg-gray-700 right-7"/>
+            <AddIcon className="z-10 absolute bottom-30 size-15 rounded-2xl text-white bg-gray-700 right-7" onClick={()=>setMostrarAddList(true)}/>
             {isLoading&&(
                 <Loading/>
             )}
