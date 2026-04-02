@@ -1,4 +1,6 @@
 import {useState} from "react"
+import Card from "./Card"
+import type {tipos} from "../types/CardType"
 type Props={
     board_id:string,
     sumir:boolean,
@@ -6,6 +8,9 @@ type Props={
 }
 export default function FormAddList({board_id,sumir,fechar}:Props){
     const [title,setTitle]=useState("")
+    const [msg,setMsg]=useState("")
+    const [tipo,setTipo]=useState<tipos>("success")
+    const [cardId,setCardId]=useState(0)
     function cancelar(){
         fechar()
     }
@@ -19,7 +24,10 @@ export default function FormAddList({board_id,sumir,fechar}:Props){
                 body:JSON.stringify({title,board_id})
             })
             const res=await response.json()
-            console.log(res.msg)
+            setMsg(res.msg)
+            setTipo(res.tipo)
+            setCardId((e)=>e+1)
+            setTimeout(fechar,1500)
         }
     return(
         <div className={`absolute w-full h-full backdrop-blur-lg z-20 ${sumir?"hidden":"flex"} items-center justify-center`}>
@@ -34,6 +42,9 @@ export default function FormAddList({board_id,sumir,fechar}:Props){
                 <button type="submit" className="bg-black font-semibold p-3 rounded-xl">Criar Lista</button>
                 </div>
             </form>
+            {msg&&msg.length>0&&(
+                <Card msg={msg} tipo={tipo} key={cardId}/>
+            )}
         </div>
     )
 }
