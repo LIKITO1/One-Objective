@@ -93,7 +93,7 @@ export default function Home(){
             {cardDelete&&(
                 <CardDelete key={cardId} onClick={excluir}/>
             )}
-                        {isLoading&&(
+            {isLoading&&(
                 <Loading/>
             )}
         </div>

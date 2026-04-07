@@ -61,7 +61,7 @@ export default function AddBoard(){
                     <label className="text-lg">Cor de Fundo:</label>
                     <div className="flex gap-3">
                         {colors.map((color:string)=>(
-                            <button className={`w-10 h-10 rounded-4xl ${colorBoard==color?"border-white border-2":"border-0"}`} style={{backgroundColor:color}} key={color} type="button" onClick={()=>{setColorBoard(color);setColorBoard(color)}}></button>
+                            <button className={`w-10 h-10 rounded-4xl ${colorBoard==color?"border-white border-2":"border-0"}`} style={{backgroundColor:color}} key={color} type="button" onClick={()=>{setColorBoard(color)}}></button>
                         ))
                         }
                     </div>

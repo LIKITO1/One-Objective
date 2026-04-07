@@ -4,9 +4,10 @@ import type {tipos} from "../types/CardType"
 type Props={
     board_id:string,
     sumir:boolean,
-    fechar:()=>void
+    fechar:()=>void,
+    atualizar:()=>void
 }
-export default function FormAddList({board_id,sumir,fechar}:Props){
+export default function FormAddList({board_id,fechar,atualizar}:Props){
     const [title,setTitle]=useState("")
     const [msg,setMsg]=useState("")
     const [tipo,setTipo]=useState<tipos>("success")
@@ -27,10 +28,14 @@ export default function FormAddList({board_id,sumir,fechar}:Props){
             setMsg(res.msg)
             setTipo(res.tipo)
             setCardId((e)=>e+1)
-            setTimeout(fechar,1500)
+            if(res.tipo=="success"){
+                fechar()
+                atualizar()
+            }
+
         }
     return(
-        <div className={`absolute w-full h-full backdrop-blur-lg z-20 ${sumir?"hidden":"flex"} items-center justify-center`}>
+        <div className={`absolute w-full h-full backdrop-blur-lg z-20 flex items-center justify-center`}>
             <form className="w-9/10 h-3/5 bg-gray-800 rounded-2xl flex flex-col items-center justify-center gap-10 text-white" onSubmit={requisitar}>
                 <h1 className="text-2xl font-bold">Adicionar Lista</h1>
                 <div className="flex flex-col items-center justify-center w-full gap-2">

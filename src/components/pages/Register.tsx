@@ -18,7 +18,7 @@ export default function Register(){
     async function register(e:{preventDefault:()=>void}){
         e.preventDefault()
         setIsLoading(true)
-        const response=await fetch("http://localhost:3000/createUser",{
+        const response=await fetch("https://backend-one-objective.onrender.com/createUser",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
