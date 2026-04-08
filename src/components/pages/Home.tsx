@@ -7,6 +7,8 @@ import Card from "../layouts/Card"
 import CardDelete from "../layouts/CardDelete"
 import Loading from "../layouts/Loading"
 import type {tipos} from "../types/CardType"
+import {reqBoards} from "../../services/BoardService"
+import {deleteBoard} from "../../services/BoardService"
 type Board={
     id:number,
     color:string,
@@ -30,41 +32,37 @@ export default function Home(){
         navigate(`/board/${idBoard}`)
     }
     async function excluir(){
+        try{
         setIsLoading(true)
-        const response=await fetch("https://backend-one-objective.onrender.com/deleteBoard",{
-            method:"DELETE",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({board_id:cardDeleteId})
-        })
-        const res=await response.json()
-        setIsLoading(false)
+        const res=await deleteBoard(cardDeleteId)
         setMsg(res.msg)
         setTipo(res.tipo)
         setCardDelete(false)
         setBoards((e)=>e.filter((a)=>a.id!=cardDeleteId))
-    }
-    useEffect(()=>{
-        async function request(){
-            setIsLoading(true)
-            const response=await fetch("https://backend-one-objective.onrender.com/boards",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({user_id:localStorage.getItem("user_id")})
-            })
-            const res=await response.json()
-            try{
-                if(res.boards.length>0){
-                    setBoards(res.boards)
-                }
-            }catch(e){
-                setBoards([])
-            }
+        }
+        catch(err){
+            setMsg("Erro ao tentar excluir")
+            setTipo("error")
+        }
+        finally{
             setIsLoading(false)
         }
+    }
+    async function request(){
+        setIsLoading(true)
+        const res=await reqBoards()
+        try{
+            if(res.boards.length>0){
+                setBoards(res.boards)
+            }
+        }catch(e){
+            setBoards([])
+        }
+        finally{
+            setIsLoading(false)
+        }
+    }
+    useEffect(()=>{
         request()
     },[])
     return(

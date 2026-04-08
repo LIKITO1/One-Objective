@@ -1,6 +1,7 @@
 import {useState} from "react"
 import Card from "./Card"
 import type {tipos} from "../types/CardType"
+import { addList } from "../../services/listService"
 type Props={
     board_id:string,
     sumir:boolean,
@@ -17,14 +18,7 @@ export default function FormAddList({board_id,fechar,atualizar}:Props){
     }
         async function requisitar(e:{preventDefault:()=>void}){
             e.preventDefault()
-            const response=await fetch("https://backend-one-objective.onrender.com/addList",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({title,board_id})
-            })
-            const res=await response.json()
+            const res=await addList(title,board_id)
             setMsg(res.msg)
             setTipo(res.tipo)
             setCardId((e)=>e+1)

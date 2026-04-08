@@ -6,6 +6,7 @@ import type {tipos} from "../types/CardType"
 import { useNavigate } from "react-router-dom"
 import Lottie from "lottie-react"
 import Kaleidoscope from "../animations/Kaleidoscope.json"
+import { createUser } from "../../services/userService"
 export default function Register(){
     const [name,setName]=useState("")
     const [email,setEmail]=useState("")
@@ -17,15 +18,9 @@ export default function Register(){
     const [isLoading,setIsLoading]=useState(false)
     async function register(e:{preventDefault:()=>void}){
         e.preventDefault()
+        try{
         setIsLoading(true)
-        const response=await fetch("https://backend-one-objective.onrender.com/createUser",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },body:JSON.stringify({name,pass,email})
-        })
-        const res=await response.json()
-        setIsLoading(false)
+        const res=await createUser({name,pass,email})
         setTipo(res.tipo)
         setMsg(res.msg)
         setCardId((e)=>e+1)
@@ -36,6 +31,13 @@ export default function Register(){
                 localStorage.setItem("user_id",res.user_id)
             },1500)
         }
+      }catch(err){
+        setMsg("Erro ao tentar criar usuário")
+        setTipo("error")
+      }
+      finally{
+        setIsLoading(false)
+      }
     }
     return(
         <>

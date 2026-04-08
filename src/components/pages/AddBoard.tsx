@@ -3,12 +3,13 @@ import Card from "../layouts/Card"
 import {useNavigate} from "react-router-dom"
 import Loading from "../layouts/Loading"
 import type {tipos} from "../types/CardType"
+import { addBoard } from "../../services/BoardService"
 export default function AddBoard(){
     const [nameBoard,setNameBoard]=useState("")
     const [colorBoard,setColorBoard]=useState("")
     const [cardId,setCardId]=useState(0)
     const [msg,setMsg]=useState("")
-    const [tipoCard,setTipoCard]=useState<tipos>("success")
+    const [tipo,setTipo]=useState<tipos>("success")
     const [isLoading,setIsLoading]=useState(false)
     const navigate=useNavigate()
     const colors= [
@@ -23,30 +24,29 @@ export default function AddBoard(){
         e.preventDefault()
         if(nameBoard==""){
             setMsg("Digite o nome do quadro")
-            setTipoCard("warning")
+            setTipo("warning")
             setCardId((valor)=>valor+1)
         }
         else if(colorBoard==""){
             setMsg("Escolha uma cor")
-            setTipoCard("warning")
+            setTipo("warning")
             setCardId((valor)=>valor+1)
         }
         else{
+            try{
             setIsLoading(true)
-            const response=await fetch("https://backend-one-objective.onrender.com/addBoard",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({name:nameBoard,color:colorBoard,user_id:localStorage.getItem("user_id")})
-            })
-            const res=await response.json()
+            const res=await addBoard(nameBoard,colorBoard)
             setMsg(res.msg)
-            setTipoCard(res.tipo)
-            setIsLoading(false)
+            setTipo(res.tipo)
             setTimeout(()=>{
                 navigate("/home")
             },1500)
+        }catch(err){
+            setMsg("Erro ao tentar adicionar board")
+            setTipo("error")
+        }finally{
+            setIsLoading(false)
+        }
         }
     }
     return(
@@ -69,7 +69,7 @@ export default function AddBoard(){
                 <button className="absolute p-3 bg-green-800 text-white font-semibold rounded-xl bottom-30 w-3/5 right-1/5 left-1/5" type="submit">Adicionar Board</button>
             </form>
             {msg&&msg.length>0&&(
-                <Card msg={msg} tipo={tipoCard} key={cardId}/>
+                <Card msg={msg} tipo={tipo} key={cardId}/>
             )}
             {isLoading&&(
                 <Loading/>

@@ -7,8 +7,9 @@ import AddIcon from "../icons/AddIcon"
 import Lists from "../layouts/Lists"
 import Loading from "../layouts/Loading"
 import FormAddList from "../layouts/FormAddList"
+import { reqBoard } from "../../services/BoardService"
 export default function Board(){
-    const {id}=useParams()
+    const {id}=useParams<string>()
     const [color,setColor]=useState("")
     const [msg,setMsg]=useState("")
     const [tipo,setTipo]=useState<tipos>("success")
@@ -18,16 +19,10 @@ export default function Board(){
     const [lists,setLists]=useState([])
     const navigate=useNavigate()
     async function requisitar(){
+        if(!id) return;
+        try{
         setIsLoading(true)
-        const response=await fetch("https://backend-one-objective.onrender.com/board",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({id})
-        })
-        const res=await response.json()
-        setIsLoading(false)
+        const res=await reqBoard(id)
         if(res?.msg){
             setMsg(res.msg)
             setTipo(res.tipo)
@@ -40,8 +35,15 @@ export default function Board(){
         setColor(res.board.color)
         setName(res.board.name)
         setLists(res.lists)
+    }catch(err){
+        setMsg("Erro ao carregar os boards")
+        setTipo("error")
+    }finally{
+        setIsLoading(false)
+    }
     }
     useEffect(()=>{
+        
         requisitar()
     },[])
     return(

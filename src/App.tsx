@@ -6,6 +6,7 @@ import type {tipos} from "./components/types/CardType"
 import {useNavigate} from "react-router-dom"
 import Lottie from "lottie-react"
 import Kaleidoscope from "./components/animations/Kaleidoscope.json"
+import { login } from "./services/userService"
 function App() {
   const [email,setEmail]=useState("")
   const [pass,setPass]=useState("")
@@ -17,13 +18,7 @@ function App() {
   async function logar(e:{preventDefault:()=>void}){
     e.preventDefault()
     setIsLoading(true)
-    const response=await fetch("https://backend-one-objective.onrender.com/login",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },body:JSON.stringify({email,pass})
-    })
-    const res=await response.json()
+    const res=await login(email,pass)
     setCardId((e)=>e+1)
     setIsLoading(false)
     setMsg(res.msg)
