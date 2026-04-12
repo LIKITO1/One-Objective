@@ -5,7 +5,7 @@ import type {tipos} from "../types/CardType"
 import Lists from "../layouts/Lists"
 import Loading from "../layouts/Loading"
 import FormAddList from "../layouts/FormAddList"
-import { reqBoard } from "../../services/BoardService"
+import { reqBoard } from "../../services/boardService"
 import MenuBoard from "../layouts/MenuBoard"
 export default function Board(){
     const {id}=useParams<string>()

@@ -7,8 +7,7 @@ import Card from "../layouts/Card"
 import CardDelete from "../layouts/CardDelete"
 import Loading from "../layouts/Loading"
 import type {tipos} from "../types/CardType"
-import {reqBoards} from "../../services/BoardService"
-import {deleteBoard} from "../../services/BoardService"
+import {reqBoards,deleteBoard} from "../../services/boardService"
 type Board={
     id:number,
     color:string,

@@ -3,12 +3,15 @@ import AddTask from "../layouts/AddTask"
 export default function List(){
     const {id}=useParams()
     async function addTask(){
-        const response=await fetch("http://localhost:3000/addTask",{
+        const response=await fetch("https://backend-one-objective.onrender.com/addTask",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
-            }
+            },
+            body:JSON.stringify({id})
         })
+        const res=await response.json()
+        return res
     }
     return(
         <div className="bg-gray-700 h-full w-full text-white absolute flex items-center py-5 flex-col">

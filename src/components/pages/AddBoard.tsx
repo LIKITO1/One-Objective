@@ -3,7 +3,7 @@ import Card from "../layouts/Card"
 import {useNavigate} from "react-router-dom"
 import Loading from "../layouts/Loading"
 import type {tipos} from "../types/CardType"
-import { addBoard } from "../../services/BoardService"
+import { addBoard } from "../../services/boardService"
 export default function AddBoard(){
     const [nameBoard,setNameBoard]=useState("")
     const [colorBoard,setColorBoard]=useState("")
