@@ -1,27 +1,15 @@
 export async function reqBoard(id:string){
-    const response=await fetch("https://backend-one-objective.onrender.com/board",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({id})
-    })
+    const response=await fetch(`https://backend-one-objective.onrender.com/board/${id}`)
     const res=await response.json()
     return res
 }
 export async function reqBoards(){
-    const response=await fetch("https://backend-one-objective.onrender.com/boards",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({user_id:localStorage.getItem("user_id")})
-    })
+    const response=await fetch(`https://backend-one-objective.onrender.com/board/lists/${localStorage.getItem("user_id")}`)
     const res=await response.json()
     return res
 }
 export async function deleteBoard(id:number){
-    const response=await fetch("https://backend-one-objective.onrender.com/deleteBoard",{
+    const response=await fetch("https://backend-one-objective.onrender.com/board/delete",{
         method:"DELETE",
         headers:{
             "Content-Type":"application/json"
@@ -32,7 +20,7 @@ export async function deleteBoard(id:number){
     return res
 }
 export async function addBoard(nameBoard:string,colorBoard:string){
-    const response=await fetch("https://backend-one-objective.onrender.com/addBoard",{
+    const response=await fetch("https://backend-one-objective.onrender.com/board/create",{
         method:"POST",
         headers:{
             "Content-Type":"application/json"

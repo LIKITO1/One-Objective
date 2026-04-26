@@ -34,6 +34,7 @@ export default function Home(){
         try{
         setIsLoading(true)
         const res=await deleteBoard(cardDeleteId)
+        console.log(res)
         setMsg(res.msg)
         setTipo(res.tipo)
         setCardDelete(false)

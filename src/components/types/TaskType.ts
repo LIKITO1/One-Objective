@@ -1,5 +1,5 @@
-type task={
+export type task={
 	title:string,
 	description:string,
-	id:number
+	id:string
 }

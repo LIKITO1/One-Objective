@@ -1,6 +1,6 @@
-import type {task} from "../types/TaskType.ts"
+import type {task} from "../components/types/TaskType.ts"
 export async function addTask({id,title,description}:task){
-        const response=await fetch("https://backend-one-objective.onrender.com/addTask",{
+        const response=await fetch("https://backend-one-objective.onrender.com/task/add",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -9,4 +9,4 @@ export async function addTask({id,title,description}:task){
         })
         const res=await response.json()
         return res
-    }
+}

@@ -4,7 +4,7 @@ type Props={
     email:string
 }
 export async function createUser({name,pass,email}:Props){
-    const response=await fetch("https://backend-one-objective.onrender.com/createUser",{
+    const response=await fetch("https://backend-one-objective.onrender.com/user/register",{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
@@ -14,7 +14,7 @@ export async function createUser({name,pass,email}:Props){
     return res
 }
 export async function login(email:string,pass:string){
-    const response=await fetch("https://backend-one-objective.onrender.com/login",{
+    const response=await fetch("https://backend-one-objective.onrender.com/user/login",{
         method:"POST",
         headers:{
           "Content-Type":"application/json"
