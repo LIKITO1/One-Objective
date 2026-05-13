@@ -9,6 +9,7 @@ import AddBoard from './components/pages/AddBoard.tsx'
 import Register from "./components/pages/Register.tsx"
 import Board from "./components/pages/Board.tsx"
 import List from "./components/pages/List.tsx"
+import AddList from "./components/pages/AddList.tsx"
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
           <Route element={<Home/>} path="/home"></Route>
           <Route element={<Perfil/>} path="/perfil"></Route>
           <Route element={<AddBoard/>} path="/addboard"></Route>
+          <Route element={<AddList/>} path="/addList/:id"></Route>
         </Route>
       </Routes>
     </Router>

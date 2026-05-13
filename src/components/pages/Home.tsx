@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Lottie from "lottie-react"
 import AeroPlane from "../animations/Aero plane.json"
 import {Link,useNavigate} from "react-router-dom"
@@ -34,7 +35,6 @@ export default function Home(){
         try{
         setIsLoading(true)
         const res=await deleteBoard(cardDeleteId)
-        console.log(res)
         setMsg(res.msg)
         setTipo(res.tipo)
         setCardDelete(false)
