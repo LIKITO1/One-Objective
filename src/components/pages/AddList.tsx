@@ -1,5 +1,5 @@
 import {useState} from "react"
-import {useParams} from "react-router-dom"
+import {useParams,useNavigate} from "react-router-dom"
 import {addList} from "../../services/listService"
 import Card from "../layouts/Card"
 import type {tipos} from "../types/CardType"
@@ -9,6 +9,7 @@ export default function AddList(){
     const [msg,setMsg]=useState("")
     const [tipo,setTipo]=useState<tipos>("success")
     const [cardId,setCardId]=useState(0)
+    const navigate=useNavigate()
     async function submitAddList(e:{preventDefault:()=>void}){
         e.preventDefault()
         if(!id) return;
@@ -16,6 +17,9 @@ export default function AddList(){
         setMsg(res.msg)
         setTipo(res.tipo)
         setCardId((e)=>e+1)
+        setTimeout(()=>{
+            navigate(`/board/${id}`)
+        },1000)
     }
     return(
         <div className="w-full h-4/5 flex items-center justify-center">

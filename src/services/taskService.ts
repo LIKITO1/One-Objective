@@ -10,3 +10,8 @@ export async function addTask({id,title,description}:task){
         const res=await response.json()
         return res
 }
+export async function listTasks(list_id:number){
+    const response=await fetch(`https://backend-one-objective.onrender.com/task/list/${list_id}`)
+    const res=await response.json()
+    return res
+}
