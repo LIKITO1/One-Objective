@@ -2,7 +2,8 @@ import HomeIcon from "../icons/HomeIcon"
 import AddIcon from "../icons/AddIcon"
 import {useNavigate,useParams} from "react-router-dom"
 type Props={
-    hiddenAdd?:boolean
+    hiddenAdd?:boolean,
+    onClick?:()=>void
 }
 export default function MenuBoard({hiddenAdd}:Props){
     const navigate=useNavigate()

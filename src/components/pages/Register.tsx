@@ -5,7 +5,7 @@ import Card from "../layouts/Card"
 import type {tipos} from "../types/CardType"
 import { useNavigate } from "react-router-dom"
 import Lottie from "lottie-react"
-import Kaleidoscope from "../animations/Kaleidoscope.json"
+import Loading from "../animations/Loading.json"
 import { createUser } from "../../services/userService"
 export default function Register(){
     const [name,setName]=useState("")
@@ -32,6 +32,7 @@ export default function Register(){
             },1500)
         }
       }catch(err){
+        console.log(err)
         setMsg("Erro ao tentar criar usuário")
         setTipo("error")
       }
@@ -66,7 +67,7 @@ export default function Register(){
     )}
     {isLoading&&(
       <div className="absolute w-full h-full flex items-center justify-center backdrop-blur-xl flex-col">
-      <Lottie animationData={Kaleidoscope} loop={true} className="w-full"/>
+      <Lottie animationData={Loading} loop={true} className="w-full"/>
       <p className="text-white text-xl font-semibold">Isso pode levar cerca de 1 minuto</p>
     </div>
     )}

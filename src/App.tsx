@@ -5,7 +5,7 @@ import Card from "./components/layouts/Card"
 import type {tipos} from "./components/types/CardType"
 import {useNavigate} from "react-router-dom"
 import Lottie from "lottie-react"
-import Kaleidoscope from "./components/animations/Kaleidoscope.json"
+import Loading from "./components/animations/Loading.json"
 import { login } from "./services/userService"
 function App() {
   const [email,setEmail]=useState("")
@@ -54,7 +54,7 @@ function App() {
     )}
     {isLoading&&(
       <div className="absolute w-full h-full flex items-center justify-center backdrop-blur-xl flex-col">
-        <Lottie animationData={Kaleidoscope} loop={true} className="w-full"/>
+        <Lottie animationData={Loading} loop={true} className="w-full"/>
         <p className="text-white text-xl font-semibold">Isso pode levar cerca de 1 minuto</p>
       </div>
     )}

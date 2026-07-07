@@ -35,6 +35,7 @@ export default function Board(){
         setName(res.board.name)
         setLists(res.lists)
     }catch(err){
+        console.log(err)
         setMsg("Erro ao carregar os boards")
         setTipo("error")
     }finally{
@@ -57,7 +58,7 @@ export default function Board(){
             {isLoading&&(
                 <Loading/>
             )}
-            <MenuBoard openAddList={()=>console.log("clique")}/>
+            <MenuBoard onClick={()=>console.log("clique")}/>
         </div>
     )
 }
