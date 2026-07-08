@@ -3,14 +3,21 @@ import MenuBoard from "../layouts/MenuBoard.tsx"
 import {useParams} from "react-router-dom"
 import {useState} from "react"
 import {addTask} from "../../services/taskService.ts"
+import Card from "../layouts/Card.tsx"
+import type { tipos } from "../types/CardType.ts"
 export default function AddTask(){
     const {id}=useParams()
     const [title,setTitle]=useState("")
     const [description,setDescription]=useState("")
+    const [msg,setMsg]=useState("")
+    const [tipo,setTipo]=useState<tipos>("error")
+    const [cardId,setCardId]=useState(0)
     async function requisitar(){
         if(!id) return;
-        const res=await addTask({id,title,description})
-        console.log(res.msg)
+            const res=await addTask({id,title,description})
+            setMsg(res.msg)
+            setTipo(res.tipo)
+            setCardId((e)=>e+1)
     }
     return(
         <div className="bg-gray-700 h-full w-full text-white absolute flex items-center py-5 flex-col">
@@ -23,6 +30,9 @@ export default function AddTask(){
                 <MenuBoard hiddenAdd={true}/>
                 <button className="w-4/5 p-2 bg-gray-800 h-1/6 rounded-xl font-semibold text-lg mt-2" onClick={requisitar}>Adicionar Tarefa</button>
             </div>
+            {msg&&msg.length>0&&(
+                <Card msg={msg} tipo={tipo} key={cardId}/>
+            )}
         </div>
     )
 }

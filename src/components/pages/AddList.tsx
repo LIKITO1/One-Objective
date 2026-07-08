@@ -38,7 +38,7 @@ export default function AddList(){
             {msg&&msg.length>0&&(
                 <Card msg={msg} tipo={tipo} key={cardId}/>
             )}
-            <ReturnButton/>
+            <ReturnButton tamanho="small"/>
         </div>
     )
 }
